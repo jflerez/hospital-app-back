@@ -1,8 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 //mongoose.connect('mongodb://localhost/hospital', {useNewUrlParser: true});
 mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res)=> {
@@ -15,15 +19,13 @@ console.log(`Conexion a la base de datos exitosa`);
 
 
 
-app.get('/', (req, res) => {
+const appRoutes = require('./routes/app');
+const usuarioRoutes = require('./routes/usuario');
+const loginRoutes = require('./routes/login');
 
-    res.status(200).json({
-        ok: true,
-        mensaje: 'Peticion realizada correctamente'
-    })
-
-});
-
+app.use('/', appRoutes);
+app.use('/usuario', usuarioRoutes);
+app.use('/login', loginRoutes);
 
 app.listen(3000, ()=>{
     console.log(`Server listen on port ${3000}`);
