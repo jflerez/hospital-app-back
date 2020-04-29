@@ -12,7 +12,7 @@ const usuarioSchema = new Schema({
     nombre:  { type: String, unique: true, required: [true, 'El nombre es obligatorio']},
     email: { type: String, unique: true, required: [true, 'El correo es obligatorio']},
     password: { type: String, required: [true, 'La contraseña es obligatoria']},
-    img: { type: String, required: false},
+    img: { type: String, required: false, default: ''},
     role: { type: String, required: true, default: 'USER_ROLE', enum: rolesValidos}
 });
 
